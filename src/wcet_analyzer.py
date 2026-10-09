@@ -60,3 +60,12 @@ def worst_case(op: Operation, model: ProcessorModel) -> int:
         + op.branches * model.branch_mispredict_penalty
     )
 
+def bcet(fragment: list[Operation], model: ProcessorModel) -> int:
+    """Суммарное наилучшее время выполнения фрагмента (BCET)."""
+    return sum(best_case(op, model) for op in fragment)
+
+
+def wcet(fragment: list[Operation], model: ProcessorModel) -> int:
+    """Суммарное наихудшее время выполнения фрагмента (WCET)."""
+    return sum(worst_case(op, model) for op in fragment)
+
