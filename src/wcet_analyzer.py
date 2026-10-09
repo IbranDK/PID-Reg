@@ -47,3 +47,16 @@ def load_configuration(file_path: str) -> tuple[ProcessorModel, list[Operation]]
     ]
     return model, operations
 
+def best_case(op: Operation, model: ProcessorModel) -> int:
+    """Лучшее время: кэш-попадание и верное предсказание перехода."""
+    return model.base_cost
+
+
+def worst_case(op: Operation, model: ProcessorModel) -> int:
+    """Худшее время: промах кэша и ошибка предсказания перехода."""
+    return (
+        model.base_cost
+        + op.memory_accesses * model.cache_miss_penalty
+        + op.branches * model.branch_mispredict_penalty
+    )
+
